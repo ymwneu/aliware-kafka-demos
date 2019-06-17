@@ -71,7 +71,7 @@ sasl.mechanism=PLAIN
 ssl.endpoint.identification.algorithm=
 ```
 
-## 公网接入，在启动kafka-mirror-maker.sh前，需要设置java.security.auth.login.config
+公网接入，在启动kafka-mirror-maker.sh前，需要设置java.security.auth.login.config
 ```shell
 > export KAFKA_OPTS="-Djava.security.auth.login.config=kafka_client_jaas.conf"
 ```
