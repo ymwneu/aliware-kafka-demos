@@ -86,6 +86,10 @@ KafkaClient {
 };
 ```
 
+### 关于配置文件的说明
+以上示例consumer.properties与producer.properties，主要针对用户自建集群往阿里云Kafka迁移。
+实际上，MirrorMaker支持各种集群之间迁移数据，但需要注意的是：目前MirrorMaker只支持一份密码。也就是说，如果迁移的源集群与目标集群都需要密码，且密码不一致，则不支持迁移。其余情况均支持迁移。
+
 ## 验证Kafka MirrorMaker成功运行
 
 方式1：
