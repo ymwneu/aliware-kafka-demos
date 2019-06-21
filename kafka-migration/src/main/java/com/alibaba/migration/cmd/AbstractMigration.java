@@ -20,9 +20,9 @@ abstract class AbstractMigration extends Cmd.MigrationCmd {
         CreateTopicRequest request = new CreateTopicRequest();
         request.setAcceptFormat(FormatType.JSON);
         //必要参数 实例ID
-        request.setInstanceId(regionId);
+        request.setInstanceId(instanceId);
         //必要参数 实例所在的区域region
-        request.setRegionId(instanceId);
+        request.setRegionId(regionId);
         //必要参数 topic 64个字符以内
         request.setTopic(topic);
         //必要参数 remark 64个字符以内

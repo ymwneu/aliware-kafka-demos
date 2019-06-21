@@ -58,7 +58,6 @@ public class TopicMigrationFromZk extends AbstractMigration {
                 if (commit) {
 
                     createTopicInYunKafka(iAcsClient, destRegionId, destInstanceId, topic, partitionNum, isCompactTopic);
-                    break;
                 } else {
 
                     logger.info("Will create topic:{}, isCompactTopic:{}, partition number:{}"

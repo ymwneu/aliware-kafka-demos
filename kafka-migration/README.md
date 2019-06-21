@@ -15,7 +15,7 @@ sh bin/run.sh
 ### 查看所有命令
 
 ```
-java -jar kafkaMigration.jar --cmdList
+java -jar kafka-migration.jar --cmdList
      TopicMigrationFromAliyun - Topic migration from aliyun
      TopicMigrationFromZk - Topic migration from zk
      ConsumerGroupMigrationFromTopic - ConsumerGroup migration from Aliyun
@@ -25,7 +25,7 @@ java -jar kafkaMigration.jar --cmdList
 ### 具体命令
 
 ```
-java -jar kafkaMigration.jar --help TopicMigrationFromAliyun
+java -jar kafka-migration.jar --help TopicMigrationFromAliyun
 Usage: TopicMigrationFromAliyun [options]
   Options:
   * --destAk

@@ -47,7 +47,6 @@ public class TopicMigrationFromAliyun extends AbstractMigration {
                 if (commit) {
 
                     createTopicInYunKafka(destIAcsClient, destRegionId, destInstanceId, topicItem.getTopic(), paratitionNum, isCompactTopic);
-                    break;
                 } else {
 
                     logger.info("Will create topic:{}, isCompactTopic:{}, partition number:{}"
