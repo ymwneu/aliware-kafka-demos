@@ -16,8 +16,6 @@ public class TopicMigrationFromZk extends AbstractMigration {
 
     private static final String TOPIC_CONFIG_PATH = "/config/topics";
 
-    private static final int DEFAULT_PARTITION_NUM = 12;
-
     @Parameter(names = "--sourceZkConnect", description = "zk connect of the source cluster")
     protected String sourceZkConnect;
 

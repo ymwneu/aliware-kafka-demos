@@ -11,6 +11,8 @@ import java.util.List;
 
 abstract class AbstractMigration extends Cmd.MigrationCmd {
 
+    protected static final int DEFAULT_PARTITION_NUM = 12;
+
     protected void createTopicInYunKafka(IAcsClient iAcsClient, String regionId, String instanceId, String topic,
         int partitionNum, boolean isCompact) {
 
@@ -25,6 +27,8 @@ abstract class AbstractMigration extends Cmd.MigrationCmd {
         request.setTopic(topic);
         //必要参数 remark 64个字符以内
         request.setRemark("autoCreate");
+        request.setCompactTopic(isCompact ? "true" : "false");
+        request.setPartitionNum(partitionNum + "");
         //获取返回值
         try {
             CreateTopicResponse response = iAcsClient.getAcsResponse(request);
@@ -39,15 +43,6 @@ abstract class AbstractMigration extends Cmd.MigrationCmd {
         }
 
         sleep();
-    }
-
-    private void sleep(){
-        // sleep防止创建频率过高
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            logger.error("", e);
-        }
     }
 
     protected void createConsumerGroupInYunKafka(IAcsClient iAcsClient, String regionId, String instanceId,
@@ -80,5 +75,14 @@ abstract class AbstractMigration extends Cmd.MigrationCmd {
             }
             sleep();
         });
+    }
+
+    private void sleep() {
+        // sleep防止创建频率过高
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            logger.error("", e);
+        }
     }
 }

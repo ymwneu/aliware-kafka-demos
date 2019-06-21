@@ -35,15 +35,15 @@ public class TopicMigrationFromAliyun extends AbstractMigration {
 
     @Override public void run() {
 
-        try{
+        try {
             IAcsClient sourceIAcsClient = buildAcsClient(this.sourceAk, this.sourceSk, this.sourceRegionId, this.sourceInstanceId);
             IAcsClient destIAcsClient = buildAcsClient(this.destAk, this.destSk, this.destRegionId, this.destInstanceId);
 
             List<GetTopicListResponse.TopicListItem> sourceTopicList = getTopicListFromAliyun(sourceIAcsClient, sourceRegionId, sourceInstanceId);
-            for(GetTopicListResponse.TopicListItem topicItem : sourceTopicList){
+            for (GetTopicListResponse.TopicListItem topicItem : sourceTopicList) {
 
-                int paratitionNum = 1;
-                boolean isCompactTopic = false;
+                int paratitionNum = topicItem.getPartitionNum() == null ? DEFAULT_PARTITION_NUM : topicItem.getPartitionNum();
+                boolean isCompactTopic = topicItem.getCompactTopic() == null ? false : topicItem.getCompactTopic();
                 if (commit) {
 
                     createTopicInYunKafka(destIAcsClient, destRegionId, destInstanceId, topicItem.getTopic(), paratitionNum, isCompactTopic);
@@ -59,7 +59,8 @@ public class TopicMigrationFromAliyun extends AbstractMigration {
         }
     }
 
-    private List<GetTopicListResponse.TopicListItem> getTopicListFromAliyun(IAcsClient iAcsClient, String regionId, String instanceId){
+    private List<GetTopicListResponse.TopicListItem> getTopicListFromAliyun(IAcsClient iAcsClient, String regionId,
+        String instanceId) {
         //构造获取topicList信息request
         GetTopicListRequest request = new GetTopicListRequest();
         request.setAcceptFormat(FormatType.JSON);
@@ -73,7 +74,7 @@ public class TopicMigrationFromAliyun extends AbstractMigration {
         try {
             GetTopicListResponse response = iAcsClient.getAcsResponse(request);
             logInfo(request, response);
-            if (200  == response.getCode() && response.getSuccess() != null && response.getSuccess()) {
+            if (200 == response.getCode() && response.getSuccess() != null && response.getSuccess()) {
                 List<GetTopicListResponse.TopicListItem> topicListItems = response.getTopicList();
                 return topicListItems != null ? topicListItems : new ArrayList<>();
             } else {
